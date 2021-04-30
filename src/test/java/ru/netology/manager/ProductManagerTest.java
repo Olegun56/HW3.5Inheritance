@@ -25,24 +25,56 @@ class ProductManagerTest {
         productManager.save(fourth);
         productManager.save(fifth);
     }
+
     @Test
     public void addProduct() {
         productManager.save(third);
         assertArrayEquals(new Product[]{third}, productRepository.findAll());
     }
+
+
     @Test
     public void searchByAuthor() {
         setUp();
-        Product[] expected = new Product[] {first,third};
+        Product[] expected = new Product[]{first, third};
         Product[] actual = productManager.searchBy("Стивен Кинг");
-        assertArrayEquals(expected,actual);
+        assertArrayEquals(expected, actual);
     }
+
     @Test
     public void searchByName() {
         setUp();
-        Product[] expected = new Product[] {third};
+        Product[] expected = new Product[]{third};
         Product[] actual = productManager.searchBy("Сияние");
-        assertArrayEquals(expected,actual);
+        assertArrayEquals(expected, actual);
     }
+
+    @Test
+    public void shouldSaveOneItem() {
+        productManager.save(first);
+
+        Product[] expected = new Product[]{first};
+        Product[] actual = productRepository.findAll();
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldBeEmpty() {
+
+        Product[] expected = new Product[]{};
+        Product[] actual = productRepository.findAll();
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSaveTwoItems() {
+        productManager.save(first);
+        productManager.save(second);
+
+        Product[] expected = new Product[]{first, second};
+        Product[] actual = productRepository.findAll();
+        assertArrayEquals(expected, actual);
+    }
+
 
 }
